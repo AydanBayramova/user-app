@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Aba32835
+      POSTGRES_PASSWORD: 12345
 
   user-app:
     container_name: user-app
@@ -25,7 +25,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: Aba32835
+      SPRING_DATASOURCE_PASSWORD: 12345
       SPRING_APPLICATION_NAME: user-app
       SERVER_PORT: 8080
 

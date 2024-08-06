@@ -7,10 +7,8 @@ import com.boot.userapp.model.dto.UserDto;
 import com.boot.userapp.model.mapper.UserMapper;
 import com.boot.userapp.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,32 +16,23 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public UserDto save(UserDto userDto) {
-        UserEntity userEntity = UserMapper.toUserEntity(userDto);
-        userEntity.setUsername(userDto.getUsername());
-        userEntity.setId(userDto.getId());
-        userEntity.setAge(userDto.getAge());
-        userEntity.setImage(userDto.getImage());
-
-        return UserMapper.toUserDto(userRepository.save(userEntity));
+        return userMapper.toUserDto(userRepository.save(userMapper.toUserEntity(userDto)));
     }
 
     @Override
     public List<UserDto> getAll() {
         List<UserEntity> userEntities = userRepository.findAll();
-        return UserMapper.toUserDto(userEntities);
+        return userMapper.toUserDto(userEntities);
     }
 
     @Override
     public Optional<UserDto> getById(Long id) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
-        if (userEntity.isPresent()) {
-            return Optional.of(UserMapper.toUserDto(userEntity.get()));
-        } else {
-            return Optional.empty();
-        }
+        return userEntity.map(userMapper::toUserDto);
     }
 
     @Override
@@ -65,12 +54,7 @@ public class UserServiceImpl implements UserService {
     public UserDto update(Long id, UserDto userDto) {
         Optional<UserEntity> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
-            UserEntity userEntity = existingUser.get();
-            userEntity.setUsername(userDto.getUsername());
-            userEntity.setAge(userDto.getAge());
-            userEntity.setImage(userDto.getImage());
-            userEntity.setUpdateDate(LocalDate.now());
-            return UserMapper.toUserDto(userRepository.save(userEntity));
+            return userMapper.toUserDto(userRepository.save(userMapper.toUserEntity(userDto)));
         } else {
             throw new ResourceNotFoundException("User with id " + id + " not found");
         }
@@ -80,10 +64,7 @@ public class UserServiceImpl implements UserService {
     public UserDto updateImage(Long id, UserDto userDto) {
         Optional<UserEntity> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
-            UserEntity userEntity = existingUser.get();
-            userEntity.setImage(userDto.getImage());
-            userEntity.setUpdateDate(LocalDate.now());
-            return UserMapper.toUserDto(userRepository.save(userEntity));
+            return userMapper.toUserDto(userRepository.save(userMapper.toUserEntity(userDto)));
         } else {
             throw new ResourceNotFoundException("User with id " + id + " not found");
         }

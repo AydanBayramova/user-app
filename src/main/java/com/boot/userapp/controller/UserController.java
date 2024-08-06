@@ -2,8 +2,8 @@ package com.boot.userapp.controller;
 
 import com.boot.userapp.model.dto.UserDto;
 import com.boot.userapp.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,15 +11,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 @Slf4j
+
 public class UserController {
 
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping
     public UserDto addUser(@RequestBody UserDto user) {
@@ -40,25 +38,25 @@ public class UserController {
         return byId.orElse(null);
     }
 
-    @DeleteMapping("/delete/all")
+    @DeleteMapping("/all")
     public void deleteAllUsers() {
         log.info("delete all users");
         userService.deleteAll();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable Long id) {
         log.info("delete user by id");
         userService.deleteById(id);
     }
 
-    @PutMapping("/updated/{id}")
+    @PutMapping("/{id}")
     public UserDto updateUserById(@PathVariable Long id, @RequestBody UserDto user) {
         log.info("update user by id");
         return userService.update(id, user);
     }
 
-    @PutMapping("/update/image/{id}")
+    @PutMapping("/image/{id}")
     public UserDto updateImageById(@PathVariable Long id, @RequestBody UserDto user) {
         log.info("update image by id");
         return userService.updateImage(id, user);

@@ -1,11 +1,12 @@
-package com.boot.userapp.service.impl;
+package com.boot.usermanagementsystem.service.impl;
 
-import com.boot.userapp.domain.entity.UserEntity;
-import com.boot.userapp.domain.repository.UserRepository;
-import com.boot.userapp.exception.ResourceNotFoundException;
-import com.boot.userapp.model.dto.UserDto;
-import com.boot.userapp.model.mapper.UserMapper;
-import com.boot.userapp.service.UserService;
+
+import com.boot.usermanagementsystem.domain.entity.UserEntity;
+import com.boot.usermanagementsystem.domain.repository.UserRepository;
+import com.boot.usermanagementsystem.exception.ResourceNotFoundException;
+import com.boot.usermanagementsystem.model.dto.UserDto;
+import com.boot.usermanagementsystem.model.mapper.UserMapper;
+import com.boot.usermanagementsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
         if (userEntity.isPresent()) {
             userRepository.deleteById(id);
         } else {
-            System.out.println("id not found");
+            throw new ResourceNotFoundException("User with id " + id + " not found");
         }
     }
 

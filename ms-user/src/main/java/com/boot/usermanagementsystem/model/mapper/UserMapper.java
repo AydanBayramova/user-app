@@ -1,8 +1,10 @@
-package com.boot.userapp.model.mapper;
+package com.boot.usermanagementsystem.model.mapper;
 
-import com.boot.userapp.model.dto.UserDto;
-import com.boot.userapp.domain.entity.UserEntity;
+
+import com.boot.usermanagementsystem.domain.entity.UserEntity;
+import com.boot.usermanagementsystem.model.dto.UserDto;
 import org.mapstruct.Mapper;
+
 import java.util.List;
 
 

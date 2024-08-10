@@ -1,7 +1,8 @@
-package com.boot.userapp.service;
+package com.boot.usermanagementsystem.service;
 
-import com.boot.userapp.model.dto.UserDto;
 
+
+import com.boot.usermanagementsystem.model.dto.UserDto;
 
 import java.util.List;
 import java.util.Optional;
